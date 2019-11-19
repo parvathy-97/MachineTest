@@ -1,0 +1,54 @@
+<div>
+  
+</div>
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+  <!-- Links -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a href="list" class="nav-link" routerLinkActive="active">Asset List</a>
+    </li>
+    <li class="nav-item">
+      <a href="add" class="nav-link" routerLinkActive="active">Add Asset</a>
+    </li>
+    <li class="nav-item">
+      <button (click)=logout() type="submit">Logout</button>
+    </li>
+  </ul>
+</nav>
+
+<div>
+
+  <table class="table  table-striped table-dark">
+    <thead>
+      <th>Asset ID</th>
+      <th>Asset Name</th>
+      <th>Asset Type</th>
+      <th>Asset Class</th>
+      <th>Actions</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ad of assetdef |async | paginate:{itemsPerPage:2,currentPage:p};let i=index ">
+        <td>{{ad.ad_id}}</td>
+        <td>{{ad.ad_name}}</td>
+        <td>{{ad.ad_type_id}}</td>
+        <td>{{ad.ad_class}}</td>
+        <button class="btn btn-warning">Edit</button>
+         <button class="btn btn-danger" style="margin-left: 20px" mwlConfirmationPopover
+        [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left"
+        (confirm)="confirmClicked = true" (cancel)="cancelClicked = true"
+        confirmButtonType="warning"
+        cancelButtonType="default"
+        (click)="confirmClicked=false;
+        cancelClicked=false"
+        [appendToBody]="true"
+        (confirm)=deleteAsset(ad.ad_id)
+        >Delete</button>
+    </tbody>
+  </table>
+</div>
+<div>
+  <pagination-controls (pageChange)="p =$event">
+
+  </pagination-controls>
+
+</div>
